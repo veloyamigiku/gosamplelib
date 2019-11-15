@@ -10,22 +10,48 @@ import (
 	"testing"
 )
 
-// 手順2
-type GoSampleLibSuite struct {}
+// 手順2 テストスイート（構造体）を定義する。
+type GoSampleLibSuite struct {
+	// テストフィクスチャの変数を定義する。
+	name string
+	age int
+}
 
-// 手順3
+// 手順3 テストスイートを登録する。
 func init() {
 	Suite(&GoSampleLibSuite{})
 }
 
-// 手順4
+// 手順4 パッケージtestingと統合する。
 func Test(t *testing.T) {
 	TestingT(t)
 }
 
+// 各テスト実行前の処理を定義する。
+func (s *GoSampleLibSuite) SetUpTest(c *C) {
+	// テストフィクスチャを作成する。
+	s.name = "Sample"
+	s.age = 10
+}
+
+// 各テスト実行後の処理を定義する。
+func (s *GoSampleLibSuite) TearDownTest(c *C) {
+	c.Log("Finished test - ", c.TestName())
+}
+
+// テスト開始前の処理を定義する。
+func (s *GoSampleLibSuite) SetUpSuite(c *C) {
+	c.Log("Starting Test Suite")
+}
+
+// テスト終了前の処理を定義する。
+func (s *GoSampleLibSuite) TearDownSuite(c *C) {
+	c.Log("Finished Test Suite")
+}
+
 // 手順5
-// Testで始まる関数を、構造体(手順2で定義した構造体)に定義する。
+// テストスイートのメソッド（Testで始まる）を定義する。
 func (s *GoSampleLibSuite) TestSay(c *C) {
-	person := gosamplelib.Person { "Sample", 10 }
+	person := gosamplelib.Person { s.name, s.age }
 	c.Check(person.Say2(), Equals, "My name is Sample, I'm 10")
 }
