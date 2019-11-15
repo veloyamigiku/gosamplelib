@@ -3,7 +3,7 @@
 package test
 
 import (
-	"github.com/veloyamigiku/gosamplelib"
+	. "github.com/veloyamigiku/gosamplelib"
 	// 先頭のドットは、パッケージ名を省略してアクセスするためのもの。
 	// 手順1
 	. "gopkg.in/check.v1"
@@ -52,6 +52,6 @@ func (s *GoSampleLibSuite) TearDownSuite(c *C) {
 // 手順5
 // テストスイートのメソッド（Testで始まる）を定義する。
 func (s *GoSampleLibSuite) TestSay(c *C) {
-	person := gosamplelib.Person { s.name, s.age }
-	c.Check(person.Say2(), Equals, "My name is Sample, I'm 10")
+	p := Person { Name: s.name, Age: s.age }
+	c.Check(p.Say2(), Equals, "My name is Sample, I'm 10")
 }
